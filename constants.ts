@@ -3,37 +3,37 @@ import { Station, Theme } from './types';
 export const STATIONS: Station[] = [
   {
     id: '1',
-    name: 'Lofi Hip Hop',
-    genre: 'Chill / Study',
-    url: 'https://streams.ilovemusic.de/iloveradio17.mp3',
-    frequency: '88.5 FM'
+    name: 'SomaFM Groove Salad',
+    genre: 'Ambient / Chill',
+    url: 'https://ice2.somafm.com/groovesalad-256-mp3',
+    frequency: '100.1 FM'
   },
   {
     id: '2',
-    name: 'Synthwave Retro',
-    genre: 'Electronic',
-    url: 'https://streams.ilovemusic.de/iloveradio2.mp3',
-    frequency: '101.2 FM'
+    name: 'Nightride FM',
+    genre: 'Synthwave / Cyberpunk',
+    url: 'https://stream.nightride.fm/nightride.mp3',
+    frequency: '88.8 FM'
   },
   {
     id: '3',
-    name: 'Classic Rock',
-    genre: 'Rock',
-    url: 'https://streams.ilovemusic.de/iloveradio10.mp3',
-    frequency: '94.3 FM'
+    name: 'Radio Paradise',
+    genre: 'Rock / Eclectic',
+    url: 'https://stream.radioparadise.com/rock-128',
+    frequency: '96.6 FM'
   },
   {
     id: '4',
-    name: 'Global News',
-    genre: 'Talk',
+    name: 'BBC World Service',
+    genre: 'Global News',
     url: 'https://stream.live.vc.bbcmedia.co.uk/bbc_world_service',
     frequency: 'AM 720'
   },
   {
     id: '5',
-    name: 'Smooth Jazz',
-    genre: 'Jazz',
-    url: 'https://streams.ilovemusic.de/iloveradio14.mp3',
+    name: 'Smooth Jazz Florida',
+    genre: 'Jazz / Lounge',
+    url: 'https://us4.internet-radio.com/proxy/wsjf?mp=/stream',
     frequency: '98.1 FM'
   }
 ];
