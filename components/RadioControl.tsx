@@ -25,7 +25,7 @@ export const RadioControl: React.FC<RadioControlProps> = ({ theme, setTheme }) =
   const changeStation = (direction: 'next' | 'prev') => {
     setIsTuning(true);
     
-    // Short delay to simulate tuning
+    // Short delay to simulate tuning knob turn before frequency change
     setTimeout(() => {
       if (direction === 'next') {
         setCurrentStationIndex((prev) => (prev + 1) % STATIONS.length);
@@ -41,31 +41,30 @@ export const RadioControl: React.FC<RadioControlProps> = ({ theme, setTheme }) =
 
     audioRef.current.volume = isMuted ? 0 : volume;
 
-    if (isPlaying) {
+    // Only play if user wants to play AND we are not currently tuning (simulating static)
+    if (isPlaying && !isTuning) {
       const playPromise = audioRef.current.play();
       if (playPromise !== undefined) {
         playPromise.catch((error) => {
           console.error("Playback prevented:", error);
-          setIsPlaying(false);
+          // Don't auto-stop here immediately, as streams might just be buffering
         });
       }
     } else {
       audioRef.current.pause();
     }
-  }, [isPlaying, currentStationIndex, volume, isMuted]);
+  }, [isPlaying, currentStationIndex, volume, isMuted, isTuning]);
 
   // Effect for Tuning Animation finish
   useEffect(() => {
     if (isTuning) {
       const timer = setTimeout(() => {
         setIsTuning(false);
-        if (isPlaying && audioRef.current) {
-            audioRef.current.play();
-        }
-      }, 800); // Tuning sound duration
+        // Playback resumption is handled by the main useEffect above when isTuning becomes false
+      }, 800); // Total tuning sound/static duration
       return () => clearTimeout(timer);
     }
-  }, [isTuning, currentStationIndex]);
+  }, [isTuning]);
 
   // Cycle Themes
   const cycleTheme = () => {
@@ -80,8 +79,11 @@ export const RadioControl: React.FC<RadioControlProps> = ({ theme, setTheme }) =
       <audio
         ref={audioRef}
         src={currentStation.url}
-        crossOrigin="anonymous"
-        onEnded={() => changeStation('next')} // Auto next if stream dies (unlikely for radio but good fallback)
+        // Removed crossOrigin="anonymous" to allow playing streams that don't support CORS headers.
+        // Note: This disables advanced Web Audio API features like real-time frequency analysis on this element,
+        // but is necessary for broad radio stream compatibility.
+        onEnded={() => changeStation('next')} 
+        onError={(e) => console.log("Stream error or interruption", e)}
       />
 
       {/* Handle */}
@@ -107,7 +109,7 @@ export const RadioControl: React.FC<RadioControlProps> = ({ theme, setTheme }) =
              {/* Header Info */}
              <div className={`flex justify-between items-center z-0 ${theme.fontDisplay} text-xs opacity-70`}>
                 <span className="flex items-center gap-1"><Radio size={14} /> {currentStation.frequency}</span>
-                <span className="uppercase tracking-widest">{isPlaying ? 'ON AIR' : 'STANDBY'}</span>
+                <span className="uppercase tracking-widest">{isPlaying && !isTuning ? 'ON AIR' : 'STANDBY'}</span>
              </div>
 
              {/* Main Station Info */}
@@ -160,7 +162,7 @@ export const RadioControl: React.FC<RadioControlProps> = ({ theme, setTheme }) =
             <button 
               onClick={() => changeStation('prev')}
               disabled={isTuning}
-              className={`p-3 rounded-full shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-300 ${theme.colors.case} text-white hover:brightness-110`}
+              className={`p-3 rounded-full shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-300 ${theme.colors.case} text-white hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed`}
             >
               <SkipBack size={20} />
             </button>
@@ -175,7 +177,7 @@ export const RadioControl: React.FC<RadioControlProps> = ({ theme, setTheme }) =
             <button 
               onClick={() => changeStation('next')}
               disabled={isTuning}
-              className={`p-3 rounded-full shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-300 ${theme.colors.case} text-white hover:brightness-110`}
+              className={`p-3 rounded-full shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-300 ${theme.colors.case} text-white hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed`}
             >
               <SkipForward size={20} />
             </button>

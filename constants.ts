@@ -5,35 +5,35 @@ export const STATIONS: Station[] = [
     id: '1',
     name: 'SomaFM Groove Salad',
     genre: 'Ambient / Chill',
-    url: 'https://ice2.somafm.com/groovesalad-256-mp3',
+    url: 'https://ice2.somafm.com/groovesalad-128-mp3',
     frequency: '100.1 FM'
   },
   {
     id: '2',
-    name: 'Nightride FM',
-    genre: 'Synthwave / Cyberpunk',
-    url: 'https://stream.nightride.fm/nightride.mp3',
+    name: 'Nightwave Plaza',
+    genre: 'Vaporwave / Aesthetics',
+    url: 'https://radio.plaza.one/mp3',
     frequency: '88.8 FM'
   },
   {
     id: '3',
     name: 'Radio Paradise',
     genre: 'Rock / Eclectic',
-    url: 'https://stream.radioparadise.com/rock-128',
+    url: 'https://stream.radioparadise.com/mp3-128',
     frequency: '96.6 FM'
   },
   {
     id: '4',
-    name: 'BBC World Service',
-    genre: 'Global News',
-    url: 'https://stream.live.vc.bbcmedia.co.uk/bbc_world_service',
-    frequency: 'AM 720'
+    name: 'KEXP Seattle',
+    genre: 'Alternative / Indie',
+    url: 'https://kexp.streamguys1.com/kexp128.mp3',
+    frequency: '90.3 FM'
   },
   {
     id: '5',
-    name: 'Smooth Jazz Florida',
-    genre: 'Jazz / Lounge',
-    url: 'https://us4.internet-radio.com/proxy/wsjf?mp=/stream',
+    name: 'GotRadio Jazz Soiree',
+    genre: 'Smooth Jazz',
+    url: 'https://pureplay.cdnstream1.com/6035_128.mp3',
     frequency: '98.1 FM'
   }
 ];
